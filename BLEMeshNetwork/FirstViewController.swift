@@ -24,9 +24,6 @@ class FirstViewController: UIViewController, MCBrowserViewControllerDelegate, MC
     
     //MARK: Properties
     
-    
-    @IBOutlet weak var browseButton: UIButton!
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet var chatView: UITextView!
     @IBOutlet var messageField: UITextField!
     
