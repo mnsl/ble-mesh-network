@@ -9,10 +9,10 @@ import UIKit
 import MultipeerConnectivity
 
 class FirstViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate {
-    @available(iOS 7.0, *)
-    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        //code
-    }
+
+
+
+    
 
     
     let serviceType = "LCOC-Chat"
@@ -31,7 +31,7 @@ class FirstViewController: UIViewController, MCBrowserViewControllerDelegate, MC
         super.viewDidLoad()
         
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
-        self.session = MCSession(peer: peerID)
+        self.session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none)
         self.session.delegate = self
         
         // create the browser viewcontroller with a unique service name
@@ -107,8 +107,14 @@ class FirstViewController: UIViewController, MCBrowserViewControllerDelegate, MC
         self.dismiss(animated: true, completion: nil)
     }
     
-    func session(session: MCSession!, didReceiveData data: Data!,
-                 fromPeer peerID: MCPeerID!)  {
+    @available(iOS 7.0, *)
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+    
+    }
+    
+    
+    @available(iOS 7.0, *)
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         // Called when a peer sends an NSData to us
         
         // This needs to run on the main queue
@@ -139,12 +145,11 @@ class FirstViewController: UIViewController, MCBrowserViewControllerDelegate, MC
     func session(_ session: MCSession, didReceive stream: InputStream,
                  withName streamName: String, fromPeer peerID: MCPeerID)  {
         // Called when a peer establishes a stream with us
+        print("established stream with peer \(peerID)")
     }
     
-    func session(_ session: MCSession, peer peerID: MCPeerID,
-                 didChange state: MCSessionState)  {
-        // Called when a connected peer changes state (for example, goes offline)
-        
+    func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
+        // required
     }
     
 }
